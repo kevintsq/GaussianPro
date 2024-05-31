@@ -107,7 +107,7 @@ def readColmapCameras(cam_extrinsics, cam_intrinsics, images_folder, sky_seg=Fal
 
         # #sky mask
         if sky_seg:
-            sky_path = image_path.replace("images", "mask")[:-4]+".npy"
+            sky_path = image_path.replace("images", "sky_mask")[:-4]+".npy"
             sky_mask = np.load(sky_path).astype(np.uint8)
         else:
             sky_mask = None

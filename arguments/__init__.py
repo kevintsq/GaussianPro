@@ -52,7 +52,7 @@ class ModelParams(ParamGroup):
         self._images = "images"
         self._resolution = -1
         self._white_background = False
-        self.data_device = "cuda"
+        self.data_device = "cpu"
         self.sky_seg = False
         self.load_normal = False
         self.load_depth = False
@@ -103,7 +103,7 @@ class OptimizationParams(ParamGroup):
         self.random_background = False
 
         #propagation parameters
-        self.ordered = False
+        self.ordered = True
         self.dataset = 'waymo'
         self.propagation_interval = 20
         self.depth_error_min_threshold = 1.0

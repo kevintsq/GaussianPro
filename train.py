@@ -115,7 +115,16 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     intervals = [-10, -5, 5, 10]
                 elif opt.dataset == 'free':
                     intervals = [-2, -1, 1, 2]
-                src_idxs = [randidx+itv for itv in intervals if ((itv + randidx > 0) and (itv + randidx < len(viewpoint_stack)))]
+                if viewpoint_cam.seq_idx is None:
+                    src_idxs = [randidx+itv for itv in intervals if ((itv + randidx > 0) and (itv + randidx < len(viewpoint_stack)))]
+                else:
+                    src_idxs = []
+                    for i in intervals:
+                        neighbor = randidx + i
+                        if i > 0 and neighbor < len(viewpoint_stack) and viewpoint_cam.seq_idx < viewpoint_stack[neighbor].seq_idx:
+                            src_idxs.append(randidx + i)
+                        elif i < 0 < neighbor and viewpoint_cam.seq_idx > viewpoint_stack[neighbor].seq_idx:
+                            src_idxs.append(randidx + i)
             else:
                 src_idxs = neighbor_indices[randidx].tolist()
 

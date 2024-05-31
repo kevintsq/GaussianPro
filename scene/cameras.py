@@ -29,6 +29,11 @@ class Camera(nn.Module):
         self.FoVx = FoVx
         self.FoVy = FoVy
         self.image_name = image_name
+        ids = image_name.split("_")
+        if len(ids) == 3:
+            self.seq_idx = int(ids[2])
+        else:
+            self.seq_idx = None
         self.sky_mask = sky_mask
         self.normal = normal
         self.depth = depth
@@ -51,7 +56,7 @@ class Camera(nn.Module):
 
         self.K = torch.tensor([[K[0], 0, K[2]],
                                [0, K[1], K[3]],
-                               [0, 0, 1]]).to(self.data_device).to(torch.float32)
+                               [0, 0, 1]], dtype=torch.float, device="cuda")
 
         self.zfar = 100.0
         self.znear = 0.01
